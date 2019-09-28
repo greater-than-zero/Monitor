@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>Hello World!</title>
+  <link rel="stylesheet" href="./node_modules/layui-src/dist/css/layui.css">
+</head>
+
+<body>
+  <h1>Hello World!</h1>
+  We are using Node.js <span id="node-version"></span>,
+  Chromium <span id="chrome-version"></span>,
+  and Electron <span id="electron-version"></span>.
+
+  <!-- You can also require other files to run in this process -->
+  <script src="./node_modules//layui-src/dist/layui.all.js"></script>
+  <script>
+    //一般直接写在一个js文件中
+    layui.use(['layer', 'form'], function () {
+      var layer = layui.layer
+        , form = layui.form;
+
+      layer.msg('Hello World');
+    });
+  </script>
+  <script src="./dist/renderer.js"></script>
+</body>
+
+</html>
