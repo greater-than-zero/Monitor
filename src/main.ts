@@ -1,7 +1,11 @@
 import { app, BrowserWindow } from "electron";
 import * as path from "path";
+import { ParseXlsx } from "./parse/parse_xlsx";
 
 let mainWindow: Electron.BrowserWindow;
+
+let parse = new ParseXlsx();
+parse.parseToFile("/Users/xukala/Documents/code/electron/test.xlsx");
 
 function createWindow() {
   // Create the browser window.
@@ -17,7 +21,7 @@ function createWindow() {
   mainWindow.loadFile(path.join(__dirname, "../index.html"));
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  //mainWindow.webContents.openDevTools();
 
   // Emitted when the window is closed.
   mainWindow.on("closed", () => {

@@ -20,8 +20,14 @@
   "author": "GitHub",
   "license": "CC0-1.0",
   "devDependencies": {
+    "@types/node-xlsx": "^0.12.1",
     "electron": "^6.0.8",
     "tslint": "^5.19.0",
     "typescript": "^3.6.0"
+  },
+  "dependencies": {
+    "@types/jquery": "^3.3.31",
+    "exceljs": "^2.0.1",
+    "layui-src": "^2.5.5"
   }
 }

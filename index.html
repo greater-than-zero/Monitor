@@ -8,24 +8,75 @@
   <link rel="stylesheet" href="./node_modules/layui-src/dist/css/layui.css">
 </head>
 
-<body>
-  <h1>Hello World!</h1>
-  We are using Node.js <span id="node-version"></span>,
-  Chromium <span id="chrome-version"></span>,
-  and Electron <span id="electron-version"></span>.
+<body class="layui-layout-body">
+  <div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+      <div class="layui-logo">E-tools 工具集合</div>
+      <ul class="layui-nav layui-layout-right">
+        <li class="layui-nav-item">
+          <a href="javascript:;">
+            <i class="layui-icon layui-nav-img" style="font-size: 16px; color: #1E9FFF;">&#xe614;</i>
+            设置
+          </a>
+          <dl class="layui-nav-child">
+            <dd><a href="">邮件管理</a></dd>
+            <dd><a href="">消息管理</a></dd>
+            <dd><a href="">授权管理</a></dd>
+          </dl>
+        </li>
+      </ul>
+    </div>
+    <div class="layui-side layui-bg-black">
+      <div class="layui-side-scroll">
+        <!-- 左侧导航区域 -->
+        <ul class="layui-nav layui-nav-tree" lay-filter="menu-tree">
+          <li class="layui-nav-item  layui-nav-itemed">
+            <a href="javascript:;">
+              <i class="layui-icon layui-icon-engine"></i> 总览
+            </a>
+          </li>
+          <li class="layui-nav-item layui-nav-itemed">
+            <a class="" href="javascript:;">加密解密</a>
+            <dl class="layui-nav-child">
+              <dd><a href="javascript:;" title="MD5" data-type="tabAdd" data-href="sections/md5.html"
+                  data-id="11">MD5</a></dd>
+              <dd><a href="javascript:;" title="Base64" data-type="tabAdd" data-href="sections/base64.html"
+                  data-id="12">Base64</a></dd>
+              <dd><a href="javascript:;" title="Escape" data-type="tabAdd" data-href="sections/escape.html"
+                  data-id="13">Escape</a></dd>
+              <dd><a href="javascript:;" title="Sha1" data-type="tabAdd" data-href="sections/sha1.html"
+                  data-id="14">Sha1</a></dd>
+            </dl>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="layui-body" style="bottom: 0;top:40px;">
+      <!-- 内容主体区域 -->
+      <div style="padding: 15px 15px 0 15px;overflow: hidden;">
+        <div class="layui-tab layui-tab-brief" lay-filter="tab_filter" lay-allowclose="true">
+          <table class="layui-hide" id="test"></table>
+        </div>
+      </div>
+    </div>
+    <div class="layui-footer">
+      <!-- 底部固定区域 -->
+      <center>© 2018 <a href="https://github.com/Suremotoo/e-tools">e-tools</a></center>
+    </div>
+  </div>
+  <script src="layui/layui.js"></script>
+</body>
+<!--Tab菜单右键弹出菜单-->
+<ul class="rightMenu" id="rightMenu">
+  <li data-type="fresh"><i class="layui-icon" style="color: #009688;">&#x1002;</i>&nbsp;刷新</li>
+  <li data-type="current"><i class="layui-icon" style="color: #FF5722;">&#x1007;</i>&nbsp;关闭当前</li>
+  <li data-type="other"><i class="layui-icon" style="color: #FFB800;">&#x1007;</i>&nbsp;关闭其它</li>
+  <li data-type="all"><i class="layui-icon" style="color: #FF5722;">&#x1006;</i>&nbsp;关闭所有</li>
+</ul>
 
-  <!-- You can also require other files to run in this process -->
-  <script src="./node_modules//layui-src/dist/layui.all.js"></script>
-  <script>
-    //一般直接写在一个js文件中
-    layui.use(['layer', 'form'], function () {
-      var layer = layui.layer
-        , form = layui.form;
-
-      layer.msg('Hello World');
-    });
-  </script>
-  <script src="./dist/renderer.js"></script>
+<!-- You can also require other files to run in this process -->
+<script src="./node_modules//layui-src/dist/layui.all.js"></script>
+<script src="./dist/renderer.js"></script>
 </body>
 
 </html>
