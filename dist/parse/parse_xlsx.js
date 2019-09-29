@@ -43,6 +43,13 @@ class ParseXlsx extends parse_base_1.ParseBase {
             // }
             sheel.eachRow((row, rowNumber) => {
                 row.eachCell((cell, cellNumber) => {
+                    console.log('fillPattern ', cell.style, rowNumber);
+                    // if (cell.style.fill && cell.style.fill.type === "pattern") {
+                    //     let fillPattern = <FillPattern>cell.style.fill;
+                    //     if (fillPattern) {
+                    //         console.log('fillPattern ', fillPattern, rowNumber);
+                    //     }
+                    // }
                     if (cell.value) {
                     }
                     console.log('Cell ' + cellNumber + ' = ', cell.value, rowNumber);

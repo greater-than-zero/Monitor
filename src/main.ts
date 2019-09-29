@@ -5,7 +5,7 @@ import { ParseXlsx } from "./parse/parse_xlsx";
 let mainWindow: Electron.BrowserWindow;
 
 let parse = new ParseXlsx();
-parse.parseToFile("/Users/xukala/Documents/code/electron/test.xlsx");
+parse.parseToFile("qq.xlsx");
 
 function createWindow() {
   // Create the browser window.

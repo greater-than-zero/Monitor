@@ -1,7 +1,8 @@
-import { Workbook, Worksheet, CellValue } from "exceljs";
+import { Workbook, Worksheet, CellValue, Row, Cell, FillPattern } from "exceljs";
 import { ParseBase } from "./parse_base";
 import { ParseInfo } from "./parse_info";
-import { ParseTableInfo } from "./parse_table";
+import { ParseTableInfo, ParseTableItem } from "./parse_table";
+import { shell } from "electron";
 
 export class ParseXlsx extends ParseBase {
     private xlsx: Workbook;
@@ -48,11 +49,24 @@ export class ParseXlsx extends ParseBase {
             //     // console.log(, "row");
             // }
 
-            sheel.eachRow((row, rowNumber) => {
-                row.eachCell((cell, cellNumber) => {
+            sheel.eachRow((row: Row, rowNumber: any) => {
+                row.eachCell((cell: Cell, cellNumber: any) => {
+                    let parseTableItem = new ParseTableItem;
+                    if (cell.style.fill && cell.style.fill.type === "pattern") {
+                        let fillPattern = <FillPattern>cell.style.fill;
+                        if (fillPattern) {
+                            parseTableItem.BgColor = fillPattern.fgColor.argb;
+                        }
+                    }
+
+                    if (cell.style && cell.style.font) {
+                        parseTableItem.FontColor = cell.style.font.color.argb;
+                    }
+
                     if (cell.value) {
 
                     }
+
                     console.log('Cell ' + cellNumber + ' = ', cell.value, rowNumber);
                 });
             });

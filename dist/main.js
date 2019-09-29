@@ -5,7 +5,7 @@ const path = require("path");
 const parse_xlsx_1 = require("./parse/parse_xlsx");
 let mainWindow;
 let parse = new parse_xlsx_1.ParseXlsx();
-parse.parseToFile("/Users/xukala/Documents/code/electron/test.xlsx");
+parse.parseToFile("qq.xlsx");
 function createWindow() {
     // Create the browser window.
     mainWindow = new electron_1.BrowserWindow({
