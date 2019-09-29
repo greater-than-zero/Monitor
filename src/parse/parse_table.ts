@@ -19,7 +19,7 @@ export const enum ParseTableValueType {
 }
 
 export class ParseTableItem {
-    private value?: number | string | Date;
+    private value?: string;
     private formula: string;
     private cell: string;
     private formulaType: ParseTableFormulaType;
@@ -59,11 +59,11 @@ export class ParseTableItem {
         this.formula = value;
     }
 
-    public get Value(): number | string | Date {
+    public get Value(): string {
         return this.value;
     }
 
-    public set Value(value: number | string | Date) {
+    public set Value(value: string) {
         this.value = value;
     }
 

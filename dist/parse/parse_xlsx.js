@@ -20,9 +20,10 @@ class ParseXlsx extends parse_base_1.ParseBase {
         this.xlsx = new exceljs_1.Workbook();
         this.xlsx.xlsx.read(data).then(() => {
             for (let table of this.xlsx.worksheets) {
-                this.parseTable(table.name);
+                parseInfo.addTable(this.parseTable(table.name));
             }
         });
+        console.log("parseToData", parseInfo);
         return parseInfo;
     }
     parseTable(tableName) {
@@ -34,29 +35,47 @@ class ParseXlsx extends parse_base_1.ParseBase {
         if (sheel) {
             parseTable = new parse_table_1.ParseTableInfo();
             parseTable.Name = tableName;
-            // for (let row = 0; row < sheel.rowCount; row++) {
-            //     let values: CellValue[] | { [key: string]: CellValue } = sheel.getRow(row + 1).values;
-            //     for (let key in values) {
-            //         let rowData: CellValue = values[key];
-            //     }
-            //     // console.log(, "row");
-            // }
+            sheel.eachColumnKey((column, index) => {
+                // console.log("Column", columns);
+            });
+            console.log("Column", sheel.columns);
             sheel.eachRow((row, rowNumber) => {
                 row.eachCell((cell, cellNumber) => {
-                    console.log('fillPattern ', cell.style, rowNumber);
-                    // if (cell.style.fill && cell.style.fill.type === "pattern") {
-                    //     let fillPattern = <FillPattern>cell.style.fill;
-                    //     if (fillPattern) {
-                    //         console.log('fillPattern ', fillPattern, rowNumber);
-                    //     }
-                    // }
-                    if (cell.value) {
-                    }
-                    console.log('Cell ' + cellNumber + ' = ', cell.value, rowNumber);
+                    console.log('Cell ' + cellNumber + ' = ', cell.value, rowNumber, this.parseTableItem(cell, cellNumber));
                 });
             });
         }
         return parseTable;
+    }
+    parseTableItem(cell, cellNumber) {
+        if (!this.xlsx) {
+            return;
+        }
+        let parseTableItem = new parse_table_1.ParseTableItem;
+        if (cell.style.fill && cell.style.fill.type === "pattern") {
+            let fillPattern = cell.style.fill;
+            if (fillPattern) {
+                parseTableItem.BgColor = fillPattern.fgColor.argb;
+            }
+        }
+        if (cell.style && cell.style.font) {
+            parseTableItem.FontColor = cell.style.font.color.argb;
+        }
+        let x = "A1:B1".match(/(?:(?:(?:'((?:[^']|'')*)')|([^'^ !]*))!)?(.*)/);
+        console.log(x);
+        this.parseTableValue(parseTableItem, cell);
+        return parseTableItem;
+    }
+    // 太多了暂时只用的上4种
+    parseTableValue(item, cell) {
+        if (cell.type === 6 /* Formula */) {
+            let formula = cell.value;
+            item.Formula = formula.formula;
+            item.Value = formula.result.toString();
+        }
+        else {
+            item.Value = cell.text;
+        }
     }
 }
 exports.ParseXlsx = ParseXlsx;

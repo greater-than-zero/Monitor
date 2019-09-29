@@ -31,6 +31,18 @@ class ParseTableItem {
     set Value(value) {
         this.value = value;
     }
+    get FontColor() {
+        return this.fontColor;
+    }
+    set FontColor(value) {
+        this.fontColor = value;
+    }
+    get BgColor() {
+        return this.bgColor;
+    }
+    set BgColor(value) {
+        this.bgColor = value;
+    }
 }
 exports.ParseTableItem = ParseTableItem;
 class ParseTableInfo {
