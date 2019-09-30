@@ -10,7 +10,7 @@ class ParseXlsx extends parse_base_1.ParseBase {
         this.xlsx = new exceljs_1.Workbook();
         this.xlsx.xlsx.readFile(path).then(() => {
             for (let table of this.xlsx.worksheets) {
-                this.parseTable(table.name);
+                parseInfo.addTable(this.parseTable(table.name));
             }
         });
         return parseInfo;
@@ -23,7 +23,6 @@ class ParseXlsx extends parse_base_1.ParseBase {
                 parseInfo.addTable(this.parseTable(table.name));
             }
         });
-        console.log("parseToData", parseInfo);
         return parseInfo;
     }
     parseTable(tableName) {
@@ -35,13 +34,9 @@ class ParseXlsx extends parse_base_1.ParseBase {
         if (sheel) {
             parseTable = new parse_table_1.ParseTableInfo();
             parseTable.Name = tableName;
-            sheel.eachColumnKey((column, index) => {
-                // console.log("Column", columns);
-            });
-            console.log("Column", sheel.columns);
             sheel.eachRow((row, rowNumber) => {
                 row.eachCell((cell, cellNumber) => {
-                    console.log('Cell ' + cellNumber + ' = ', cell.value, rowNumber, this.parseTableItem(cell, cellNumber));
+                    parseTable.addRow(rowNumber, this.parseTableItem(cell, cellNumber));
                 });
             });
         }
@@ -55,18 +50,20 @@ class ParseXlsx extends parse_base_1.ParseBase {
         if (cell.style.fill && cell.style.fill.type === "pattern") {
             let fillPattern = cell.style.fill;
             if (fillPattern) {
-                parseTableItem.BgColor = fillPattern.fgColor.argb;
+                if (fillPattern.fgColor) {
+                    parseTableItem.BgColor = fillPattern.fgColor.argb;
+                }
             }
         }
         if (cell.style && cell.style.font) {
-            parseTableItem.FontColor = cell.style.font.color.argb;
+            if (cell.style.font.color) {
+                parseTableItem.FontColor = cell.style.font.color.argb;
+            }
         }
-        let x = "A1:B1".match(/(?:(?:(?:'((?:[^']|'')*)')|([^'^ !]*))!)?(.*)/);
-        console.log(x);
+        parseTableItem.Address = cell.address;
         this.parseTableValue(parseTableItem, cell);
         return parseTableItem;
     }
-    // 太多了暂时只用的上4种
     parseTableValue(item, cell) {
         if (cell.type === 6 /* Formula */) {
             let formula = cell.value;

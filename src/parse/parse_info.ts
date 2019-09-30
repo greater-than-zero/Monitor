@@ -9,4 +9,8 @@ export class ParseInfo {
         }
         this.tables[table.Name] = table;
     }
+
+    public getTables(): { [index: string]: ParseTableInfo } {
+        return this.tables;
+    }
 }

@@ -10,6 +10,9 @@ class ParseInfo {
         }
         this.tables[table.Name] = table;
     }
+    getTables() {
+        return this.tables;
+    }
 }
 exports.ParseInfo = ParseInfo;
 //# sourceMappingURL=parse_info.js.map

@@ -1,33 +1,18 @@
 // This file is required by the index.html file and will
 // be executed in the renderer process for that window.
 // All of the Node.js APIs are available in this process.
+const ipcRenderer = require("electron").ipcRenderer;
 layui.use('table', function () {
-    var table = layui.table;
-    table.render({
-        elem: '#test',
-        height: 300,
-        title: '用户表',
-        page: true //开启分页
-        ,
-        totalRow: true //开启合计行
-        ,
-        cols: [[
-                ,
-                { field: 'id', title: 'ID', width: 80, sort: true, totalRowText: '合计：' },
-                { field: 'username', title: '用户名', width: 80 },
-                { field: 'experience', title: '积分', width: 90, sort: true, totalRow: true },
-                { field: 'sex', title: '性别', width: 80, sort: true },
-                { field: 'score', title: '评分', width: 80, sort: true, totalRow: true },
-                { field: 'city', title: '城市', width: 150 },
-                { field: 'sign', title: '签名', width: 200 },
-                { field: 'classify', title: '职业', width: 100 },
-                { field: 'wealth', title: '财富', width: 135, sort: true, totalRow: true },
-                { fixed: 'right', width: 165, align: 'center', toolbar: '#barDemo' }
-            ]],
-        data: [{ id: 111 }, { id: 222 }]
-    });
-    table.relode("#test", {
-        data: [{ id: 111 }, { id: 222 }, { id: 4444 }]
+    let table = layui.table;
+    ipcRenderer.on("start-table", (event, cols, data) => {
+        console.log(cols, data);
+        table.render({
+            elem: '#test',
+            height: 300,
+            title: '用户表',
+            cols: [cols],
+            data: data
+        });
     });
 });
 layui.use('element', function () {

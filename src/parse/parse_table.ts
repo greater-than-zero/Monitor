@@ -26,6 +26,7 @@ export class ParseTableItem {
     private type: ParseTableValueType;
     private fontColor: string;
     private bgColor: string;
+    private address: string;
 
     public get Type(): ParseTableValueType {
         return this.type;
@@ -82,12 +83,24 @@ export class ParseTableItem {
     public set BgColor(value: string) {
         this.bgColor = value;
     }
+
+    public get Address(): string {
+        return this.address;
+    }
+
+    public set Address(value: string) {
+        this.address = value;
+    }
 }
 
 export class ParseTableInfo {
     private tableName: string;
-    private rows: ParseTableItem[];
-    private cols: ParseTableItem[];
+    private rows: { [index: number]: ParseTableItem[] } = {};
+    public static TrusRowIndex = 5;
+
+    constructor() {
+        this.rows = {};
+    }
 
     public get Name(): string {
         return this.tableName;
@@ -95,5 +108,37 @@ export class ParseTableInfo {
 
     public set Name(value: string) {
         this.tableName = value;
+    }
+
+    public addRow(cloumnIndex: number, row: ParseTableItem) {
+        if (!this.rows[cloumnIndex]) {
+            this.rows[cloumnIndex] = [];
+        }
+
+        this.rows[cloumnIndex].push(row);
+    }
+
+    public getDefaults(): ParseTableItem[] {
+        return this.rows[1];
+    }
+
+    public getTypes(): ParseTableItem[] {
+        return this.rows[2];
+    }
+
+    public getDescs(): ParseTableItem[] {
+        return this.rows[3];
+    }
+
+    public getNames(): ParseTableItem[] {
+        return this.rows[4];
+    }
+
+    public getDatas(index: number): ParseTableItem[] {
+        return this.rows[index];
+    }
+
+    public getTrueCount(): number {
+        return Object.keys(this.rows).length - 3;
     }
 }
