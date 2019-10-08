@@ -2,28 +2,57 @@
 // be executed in the renderer process for that window.
 // All of the Node.js APIs are available in this process.
 const ipcRenderer = require("electron").ipcRenderer;
+let selectTable: number = 0;
 
-layui.use('table', function () {
+layui.use(['table', 'element'], function () {
+    let $ = layui.jquery
     let table = layui.table;
+    let element = layui.element;
 
-    ipcRenderer.on("start-table", (event, cols, data) => {
-        console.log(cols, data);
-        table.render({
-            elem: '#test'
-            , height: 300
-            , title: '用户表'
-            , cols: [cols]
-            , data: data
+    ipcRenderer.on("start-table", (event, data, tables) => {
+        for (let key in data) {
+            let tableInfo = data[key];
+            table.render({
+                elem: '#test'
+                , height: 300
+                , title: '用户表'
+                , cols: [tableInfo.cols]
+                , data: tableInfo.datas
+                , limit: 999999
+            });
+            break;
+        }
+
+        let tableIndex = 0;
+        for (let table of tables) {
+            element.tabAdd('mo-table-all', {
+                title: table
+                , content: ''
+                , id: tableIndex + ""
+            });
+            tableIndex++;
+        }
+
+        element.tabChange('mo-table-all', "0");
+        element.on('tab(mo-table-all)', function (elem) {
+            //location.hash = 'test=' + $(this).attr('lay-id');
+            selectTable = Number($(this).attr('lay-id'));
+            let count = 0;
+            for (let key in data) {
+                let tableInfo = data[key];
+                if (count === selectTable) {
+                    table.render({
+                        elem: '#test'
+                        , height: 300
+                        , title: '用户表'
+                        , cols: [tableInfo.cols]
+                        , data: tableInfo.datas
+                        , limit: 999999
+                    });
+                    break;
+                }
+                count++;
+            }
         });
     });
 });
-
-layui.use('element', function () {
-    var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
-
-    //监听导航点击
-    element.on('nav(demo)', function (elem) {
-        layui.layer.msg(elem.text());
-    });
-});
-

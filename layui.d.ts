@@ -184,6 +184,7 @@ declare module layui {
       tabChange(filter: string, layid: string): void;
       progress(filter: string, percent: string): any;
       render(type?: string, filter?: string): void;
+      tab: any;
     }
   
     interface LayFormData {
@@ -274,6 +275,7 @@ declare module layui {
     export let laydate: Laydate;
     export let laypage: Laypage;
     export let table: any;
+    export let jquery: any;
   
     export function use(mods: string | string[], callback: (...args: any[]) => any): any;
   }

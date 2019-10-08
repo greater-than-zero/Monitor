@@ -4,6 +4,7 @@ import { ParseInfo } from "./parse_info";
 import { ParseTableInfo, ParseTableItem } from "./parse_table";
 
 export class ParseXlsx extends ParseBase {
+    public static ExplanatoryNote: string = "#";
     private xlsx: Workbook;
 
     public parseToFile(path: string): ParseInfo {

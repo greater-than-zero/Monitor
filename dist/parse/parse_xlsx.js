@@ -76,4 +76,5 @@ class ParseXlsx extends parse_base_1.ParseBase {
     }
 }
 exports.ParseXlsx = ParseXlsx;
+ParseXlsx.ExplanatoryNote = "#";
 //# sourceMappingURL=parse_xlsx.js.map
