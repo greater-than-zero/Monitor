@@ -51,5 +51,38 @@ layui.use(['table', 'element'], function () {
             }
         });
     });
+    $('.layui-btn').click(function () {
+        let inputVal = $('.layui-input').val();
+        table.reload('test', {
+            where: {
+                query: inputVal
+            }
+        });
+    });
+    window["x"].spreadsheet.locale('zh-cn');
+    let spreadsheet = window["x"].spreadsheet("#xspreadsheet", {
+        view: {
+            height: () => 300,
+            width: () => 400,
+        },
+    });
+    spreadsheet.loadData({
+        freeze: "A1",
+        styles: [],
+        merges: [],
+        rows: [{
+                cells: [
+                    { "text": "asd" },
+                    { "text": "2" }
+                ]
+            }],
+        cols: { len: 26 },
+        validations: [],
+        autofilter: [],
+    });
+    spreadsheet.change(data => {
+        console.log(data);
+    });
+    spreadsheet.validate();
 });
 //# sourceMappingURL=renderer.js.map

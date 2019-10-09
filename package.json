@@ -28,6 +28,7 @@
   "dependencies": {
     "@types/jquery": "^3.3.31",
     "exceljs": "^2.0.1",
-    "layui-src": "^2.5.5"
+    "layui-src": "^2.5.5",
+    "x-data-spreadsheet": "^1.0.27"
   }
 }
