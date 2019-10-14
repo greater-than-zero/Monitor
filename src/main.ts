@@ -3,6 +3,7 @@ import * as path from "path";
 import { ParseXlsx } from "./parse/parse_xlsx";
 import { ParseTableInfo } from "./parse/parse_table";
 import { RenderLayuiTable } from "./render/render_layui_table";
+import { RenderXSpeedTable } from "./render/render_xspeed_table";
 
 let mainWindow: Electron.BrowserWindow;
 
@@ -55,11 +56,13 @@ app.on("activate", () => {
 
 let parse = new ParseXlsx();
 let renderLayuiTable = new RenderLayuiTable();
+let renderXSpeedTable = new RenderXSpeedTable();
 let xlsxData = parse.parseToFile("qq.xlsx");
 // In this file you can include the rest of your app"s specific main process
 // code. You can also put them in separate files and require them here.
 ipcMain.on("start-table", (event: IpcMainEvent, data) => {
   let xlsxTables = renderLayuiTable.renderTableList(xlsxData);
   let renderData = renderLayuiTable.render(xlsxData);
-  event.sender.send("start-table", renderData, xlsxTables);
+  let renderData2 = renderXSpeedTable.render(xlsxData);
+  event.sender.send("start-table", renderData, xlsxTables, renderData2);
 });

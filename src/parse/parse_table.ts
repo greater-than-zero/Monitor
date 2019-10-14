@@ -141,4 +141,8 @@ export class ParseTableInfo {
     public getTrueCount(): number {
         return Object.keys(this.rows).length - 3;
     }
+
+    public getCount(): number {
+        return Object.keys(this.rows).length;
+    }
 }

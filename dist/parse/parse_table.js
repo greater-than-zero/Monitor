@@ -86,6 +86,9 @@ class ParseTableInfo {
     getTrueCount() {
         return Object.keys(this.rows).length - 3;
     }
+    getCount() {
+        return Object.keys(this.rows).length;
+    }
 }
 exports.ParseTableInfo = ParseTableInfo;
 ParseTableInfo.TrusRowIndex = 5;

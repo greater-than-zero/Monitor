@@ -7,7 +7,8 @@ layui.use(['table', 'element'], function () {
     let $ = layui.jquery;
     let table = layui.table;
     let element = layui.element;
-    ipcRenderer.on("start-table", (event, data, tables) => {
+    window["x"].spreadsheet.locale('zh-cn');
+    ipcRenderer.on("start-table", (event, data, tables, tables2) => {
         for (let key in data) {
             let tableInfo = data[key];
             table.render({
@@ -50,39 +51,29 @@ layui.use(['table', 'element'], function () {
                 count++;
             }
         });
+        let spreadsheet = window["x"].spreadsheet("#xspreadsheet", {
+            view: {
+                height: () => 600,
+            },
+            row: {
+                len: tables2[2].datas.length,
+            },
+        });
+        spreadsheet.loadData({
+            freeze: "B5",
+            styles: [],
+            merges: [],
+            rows: tables2[2].datas,
+            cols: { len: 26 },
+            validations: [],
+            autofilter: {},
+        });
+        spreadsheet.change(data => {
+            console.log(data);
+        });
+        spreadsheet.validate();
     });
     $('.layui-btn').click(function () {
-        let inputVal = $('.layui-input').val();
-        table.reload('test', {
-            where: {
-                query: inputVal
-            }
-        });
     });
-    window["x"].spreadsheet.locale('zh-cn');
-    let spreadsheet = window["x"].spreadsheet("#xspreadsheet", {
-        view: {
-            height: () => 300,
-            width: () => 400,
-        },
-    });
-    spreadsheet.loadData({
-        freeze: "A1",
-        styles: [],
-        merges: [],
-        rows: [{
-                cells: [
-                    { "text": "asd" },
-                    { "text": "2" }
-                ]
-            }],
-        cols: { len: 26 },
-        validations: [],
-        autofilter: [],
-    });
-    spreadsheet.change(data => {
-        console.log(data);
-    });
-    spreadsheet.validate();
 });
 //# sourceMappingURL=renderer.js.map

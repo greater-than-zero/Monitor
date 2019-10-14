@@ -4,6 +4,7 @@ const electron_1 = require("electron");
 const path = require("path");
 const parse_xlsx_1 = require("./parse/parse_xlsx");
 const render_layui_table_1 = require("./render/render_layui_table");
+const render_xspeed_table_1 = require("./render/render_xspeed_table");
 let mainWindow;
 function createWindow() {
     // Create the browser window.
@@ -48,12 +49,14 @@ electron_1.app.on("activate", () => {
 });
 let parse = new parse_xlsx_1.ParseXlsx();
 let renderLayuiTable = new render_layui_table_1.RenderLayuiTable();
+let renderXSpeedTable = new render_xspeed_table_1.RenderXSpeedTable();
 let xlsxData = parse.parseToFile("qq.xlsx");
 // In this file you can include the rest of your app"s specific main process
 // code. You can also put them in separate files and require them here.
 electron_1.ipcMain.on("start-table", (event, data) => {
     let xlsxTables = renderLayuiTable.renderTableList(xlsxData);
     let renderData = renderLayuiTable.render(xlsxData);
-    event.sender.send("start-table", renderData, xlsxTables);
+    let renderData2 = renderXSpeedTable.render(xlsxData);
+    event.sender.send("start-table", renderData, xlsxTables, renderData2);
 });
 //# sourceMappingURL=main.js.map
