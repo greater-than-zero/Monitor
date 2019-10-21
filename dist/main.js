@@ -57,6 +57,7 @@ electron_1.ipcMain.on("start-table", (event, data) => {
     let xlsxTables = renderLayuiTable.renderTableList(xlsxData);
     let renderData = renderLayuiTable.render(xlsxData);
     let renderData2 = renderXSpeedTable.render(xlsxData);
-    event.sender.send("start-table", renderData, xlsxTables, renderData2);
+    console.log(event, data);
+    event.reply("start-table", renderData, xlsxTables, renderData2);
 });
 //# sourceMappingURL=main.js.map

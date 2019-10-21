@@ -98,3 +98,7 @@ layui.use(['table', 'element', 'layer'], function () {
 window.addEventListener("DOMContentLoaded", () => {
     ipcRenderer.send("start-table", "aaa");
 });
+
+ipcRenderer.on("start-table222", (data)=> {
+    console.log(data);
+});
