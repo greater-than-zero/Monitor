@@ -34,7 +34,7 @@ class RenderXSpeedTable extends render_base_1.RenderBase {
         };
         return r;
     }
-    renderTopItem(item) {
+    renderTopItem(item, style = -1) {
         let value = item ? item.Value : "";
         if (value === "__type__") {
             value = "类型";
@@ -51,9 +51,12 @@ class RenderXSpeedTable extends render_base_1.RenderBase {
         let r = {
             text: value
         };
+        if (style >= 0) {
+            r["style"] = style;
+        }
         return r;
     }
-    renderTopTypeItem(item) {
+    renderTopTypeItem(item, style = -1) {
         let value = item ? item.text : "";
         if (RenderXSpeedTable.tranforTypeToChina[value]) {
             value = RenderXSpeedTable.tranforTypeToChina[value];
@@ -61,6 +64,9 @@ class RenderXSpeedTable extends render_base_1.RenderBase {
         let r = {
             text: value
         };
+        if (style >= 0) {
+            r["style"] = style;
+        }
         return r;
     }
     renderTable(table) {
@@ -73,10 +79,10 @@ class RenderXSpeedTable extends render_base_1.RenderBase {
         let names = table.getNames();
         let descs = table.getDescs();
         let defaults = table.getDefaults();
-        sendData.push({ cells: this.createTableTopInfo(types, defaults) });
-        sendData.push({ cells: this.createTableTopInfo(types, types, true) });
-        sendData.push({ cells: this.createTableTopInfo(types, descs) });
-        sendData.push({ cells: this.createTableTopInfo(types, names) });
+        sendData.push({ cells: this.createTableTopInfo(types, defaults, false, 0) });
+        sendData.push({ cells: this.createTableTopInfo(types, types, true, 1) });
+        sendData.push({ cells: this.createTableTopInfo(types, descs, false, 2) });
+        sendData.push({ cells: this.createTableTopInfo(types, names, false, 3) });
         for (let i = parse_table_1.ParseTableInfo.TrusRowIndex; i <= table.getCount(); i++) {
             let sendObject = [];
             let datas = table.getDatas(i);
@@ -94,7 +100,7 @@ class RenderXSpeedTable extends render_base_1.RenderBase {
         }
         return sendData;
     }
-    createTableTopInfo(types, datas, isType = false) {
+    createTableTopInfo(types, datas, isType = false, style = -1) {
         let sendTopObject = [];
         for (let i = 0; i < types.length; i++) {
             let data = datas[i];
@@ -103,10 +109,10 @@ class RenderXSpeedTable extends render_base_1.RenderBase {
                 continue;
             }
             if (isType) {
-                sendTopObject.push(this.renderTopTypeItem(this.renderTopItem(data)));
+                sendTopObject.push(this.renderTopTypeItem(this.renderTopItem(data), style));
             }
             else {
-                sendTopObject.push(this.renderTopItem(data));
+                sendTopObject.push(this.renderTopItem(data, style));
             }
         }
         return sendTopObject;

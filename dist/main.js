@@ -11,8 +11,8 @@ function createWindow() {
     mainWindow = new electron_1.BrowserWindow({
         height: 600,
         webPreferences: {
-            preload: path.join(__dirname, "preload.js"),
             nodeIntegration: true,
+            nodeIntegrationInSubFrames: true,
         },
         width: 800,
     });

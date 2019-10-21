@@ -4,25 +4,58 @@
 const ipcRenderer = require("electron").ipcRenderer;
 
 let selectTable: number = 0;
+let spreadsheet = null;
+let styles = [
+    { bgcolor: "#a7d08c" },  //缺省值样式
+    { bgcolor: "#fed964" },  //type样式
+    { bgcolor: "#f4b184" },  //值描述样式
+    { bgcolor: "#8596b0" }, //程序用名样式
+];
 
-layui.use(['table', 'element'], function () {
+let initTable = function (table: any) {
+    let tableData = table;
+    spreadsheet = window["x"].spreadsheet("#xspreadsheet", {
+        view: {
+            height: () => 600,
+        },
+        row: {
+            len: tableData.datas.length,
+        },
+    });
+
+    spreadsheet.change(data => {
+        console.log(data);
+    });
+
+    setTableData(table);
+}
+
+let setTableData = function (table: any) {
+    spreadsheet.loadData({
+        freeze: "B5",
+        styles: styles,
+        merges: [],
+        rows: table.datas,
+        cols: { len: 26 },
+        validations: [],
+        autofilter: {},
+    });
+
+    spreadsheet.validate();
+}
+
+layui.use(['table', 'element', 'layer'], function () {
     let $ = layui.jquery
     let table = layui.table;
     let element = layui.element;
+    let layer = layui.layer;
 
     window["x"].spreadsheet.locale('zh-cn');
 
     ipcRenderer.on("start-table", (event, data, tables, tables2) => {
         for (let key in data) {
-            let tableInfo = data[key];
-            table.render({
-                elem: '#test'
-                , height: 300
-                , title: '用户表'
-                , cols: [tableInfo.cols]
-                , data: tableInfo.datas
-                , limit: 999999
-            });
+            let tableData = tables2[key];
+            initTable(tableData);
             break;
         }
 
@@ -42,48 +75,26 @@ layui.use(['table', 'element'], function () {
             selectTable = Number($(this).attr('lay-id'));
             let count = 0;
             for (let key in data) {
-                let tableInfo = data[key];
+                let tableData = tables2[key];
                 if (count === selectTable) {
-                    table.render({
-                        elem: '#test'
-                        , height: 300
-                        , title: '用户表'
-                        , cols: [tableInfo.cols]
-                        , data: tableInfo.datas
-                        , limit: 999999
-                    });
+                    setTableData(tableData);
                     break;
                 }
                 count++;
             }
         });
 
-        let spreadsheet = window["x"].spreadsheet("#xspreadsheet", {
-            view: {
-                height: () => 600,
-            },
-            row: {
-                len: tables2[2].datas.length,
-            },
+        element.on('nav(menu-tree)', function (elem) {
+            var othis = $(this),
+                href = othis.data('href');
         });
-
-        spreadsheet.loadData({
-            freeze: "B5",
-            styles: [],
-            merges: [],
-            rows: tables2[2].datas,
-            cols: { len: 26 },
-            validations: [],
-            autofilter: {},
-        });
-
-        spreadsheet.change(data => {
-            console.log(data);
-        });
-
-        spreadsheet.validate();
     });
 
     $('.layui-btn').click(function () {
     });
+
+});
+
+window.addEventListener("DOMContentLoaded", () => {
+    ipcRenderer.send("start-table", "aaa");
 });

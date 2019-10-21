@@ -57,7 +57,7 @@ export class RenderXSpeedTable extends RenderBase {
         return r;
     }
 
-    public renderTopItem(item: ParseTableItem): any {
+    public renderTopItem(item: ParseTableItem, style: number = -1): any {
         let value = item ? item.Value : "";
         if (value === "__type__") {
             value = "类型";
@@ -72,10 +72,14 @@ export class RenderXSpeedTable extends RenderBase {
         let r = {
             text: value
         };
+
+        if (style >= 0) {
+            r["style"] = style;
+        }
         return r;
     }
 
-    public renderTopTypeItem(item: any) {
+    public renderTopTypeItem(item: any, style: number = -1) {
         let value = item ? item.text : "";
 
         if (RenderXSpeedTable.tranforTypeToChina[value]) {
@@ -86,6 +90,9 @@ export class RenderXSpeedTable extends RenderBase {
             text: value
         };
 
+        if (style >= 0) {
+            r["style"] = style;
+        }
         return r;
     }
 
@@ -101,10 +108,10 @@ export class RenderXSpeedTable extends RenderBase {
         let descs = table.getDescs();
         let defaults = table.getDefaults();
 
-        sendData.push({ cells: this.createTableTopInfo(types, defaults) });
-        sendData.push({ cells: this.createTableTopInfo(types, types, true) });
-        sendData.push({ cells: this.createTableTopInfo(types, descs) });
-        sendData.push({ cells: this.createTableTopInfo(types, names) });
+        sendData.push({ cells: this.createTableTopInfo(types, defaults, false, 0) });
+        sendData.push({ cells: this.createTableTopInfo(types, types, true, 1) });
+        sendData.push({ cells: this.createTableTopInfo(types, descs, false, 2) });
+        sendData.push({ cells: this.createTableTopInfo(types, names, false, 3) });
 
         for (let i = ParseTableInfo.TrusRowIndex; i <= table.getCount(); i++) {
             let sendObject: any[] = [];
@@ -128,7 +135,7 @@ export class RenderXSpeedTable extends RenderBase {
         return sendData;
     }
 
-    private createTableTopInfo(types: ParseTableItem[], datas: ParseTableItem[], isType: boolean = false) {
+    private createTableTopInfo(types: ParseTableItem[], datas: ParseTableItem[], isType: boolean = false, style: number = -1) {
         let sendTopObject = [];
         for (let i = 0; i < types.length; i++) {
             let data = datas[i];
@@ -138,9 +145,9 @@ export class RenderXSpeedTable extends RenderBase {
             }
 
             if (isType) {
-                sendTopObject.push(this.renderTopTypeItem(this.renderTopItem(data)));
+                sendTopObject.push(this.renderTopTypeItem(this.renderTopItem(data), style));
             } else {
-                sendTopObject.push(this.renderTopItem(data));
+                sendTopObject.push(this.renderTopItem(data, style));
             }
         }
 

@@ -276,6 +276,7 @@ declare module layui {
     export let laypage: Laypage;
     export let table: any;
     export let jquery: any;
+    export let each: any;
   
     export function use(mods: string | string[], callback: (...args: any[]) => any): any;
   }

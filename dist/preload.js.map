@@ -1,1 +1,1 @@
-{"version":3,"file":"preload.js","sourceRoot":"","sources":["../src/preload.ts"],"names":[],"mappings":"AAAA,gEAAgE;AAChE,iDAAiD;AACjD,MAAM,CAAC,gBAAgB,CAAC,kBAAkB,EAAE,GAAG,EAAE;IAC/C,WAAW,CAAC,IAAI,CAAC,aAAa,EAAE,KAAK,CAAC,CAAC;AACzC,CAAC,CAAC,CAAC"}
+{"version":3,"file":"preload.js","sourceRoot":"","sources":["../src/preload.ts"],"names":[],"mappings":"AAAA,gEAAgE;AAChE,iDAAiD;AACjD,MAAM,CAAC,gBAAgB,CAAC,kBAAkB,EAAE,GAAG,EAAE;IAC/C,OAAO,CAAC,GAAG,CAAC,IAAI,CAAC,CAAC;AACpB,CAAC,CAAC,CAAC"}
