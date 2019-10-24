@@ -1,0 +1,52 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Users\ADMIN\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add vue
+
+PATH: 
+  C:\ProgramData\DockerDesktop\version-bin;C:\Program Files\Docker\Docker\Resources\bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\TortoiseSVN\bin;C:\Python27;C:\Program Files\nodejs\;C:\Program Files\Java\jdk1.8.0_191\bin;C:\Program Files\Java\jdk1.8.0_191\jre\bin;C:\Users\ADMIN\AppData\Local\Microsoft\WindowsApps;D:\Microsoft VS Code\bin;C:\Users\ADMIN\AppData\Roaming\npm
+
+Yarn version: 
+  1.19.1
+
+Node version: 
+  10.15.0
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: ENOENT: no such file or directory, copyfile 'C:\Users\ADMIN\AppData\Local\Yarn\Cache\v6\npm-ms-2.1.2-d09d1f357b443f493382a8eb3ccd183872ae6009-integrity\node_modules\ms\package.json' -> 'D:\code\Monitor2\node_modules\electron-download\node_modules\ms\package.json'
+
+npm manifest: 
+  {
+    "name": "electron-quick-start-typescript",
+    "version": "1.0.0",
+    "description": "A minimal Electron application written with Typescript",
+    "scripts": {
+      "build": "tsc",
+      "watch": "tsc -w",
+      "lint": "tslint -c tslint.json -p tsconfig.json",
+      "start": "npm run build && electron ./dist/main.js"
+    },
+    "repository": "https://github.com/electron/electron-quick-start-typescript",
+    "keywords": [
+      "Electron",
+      "quick",
+      "start",
+      "tutorial",
+      "demo",
+      "typescript"
+    ],
+    "author": "GitHub",
+    "license": "CC0-1.0",
+    "devDependencies": {
+      "electron": "^6.0.8",
+      "tslint": "^5.19.0",
+      "typescript": "^3.6.0"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

@@ -1,9 +1,5 @@
-import { app, BrowserWindow, ipcMain, IpcMainEvent } from "electron";
+import { app, BrowserWindow } from "electron";
 import * as path from "path";
-import { ParseXlsx } from "./parse/parse_xlsx";
-import { ParseTableInfo } from "./parse/parse_table";
-import { RenderLayuiTable } from "./render/render_layui_table";
-import { RenderXSpeedTable } from "./render/render_xspeed_table";
 
 let mainWindow: Electron.BrowserWindow;
 
@@ -12,8 +8,7 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     height: 600,
     webPreferences: {
-      nodeIntegration: true,
-      nodeIntegrationInSubFrames: true,
+      preload: path.join(__dirname, "preload.js"),
     },
     width: 800,
   });
@@ -22,7 +17,8 @@ function createWindow() {
   mainWindow.loadFile(path.join(__dirname, "../index.html"));
 
   // Open the DevTools.
-  //mainWindow.webContents.openDevTools();
+  mainWindow.webContents.openDevTools();
+
   // Emitted when the window is closed.
   mainWindow.on("closed", () => {
     // Dereference the window object, usually you would store windows
@@ -54,16 +50,5 @@ app.on("activate", () => {
   }
 });
 
-let parse = new ParseXlsx();
-let renderLayuiTable = new RenderLayuiTable();
-let renderXSpeedTable = new RenderXSpeedTable();
-let xlsxData = parse.parseToFile("qq.xlsx");
 // In this file you can include the rest of your app"s specific main process
 // code. You can also put them in separate files and require them here.
-ipcMain.on("start-table", (event: IpcMainEvent, data) => {
-  let xlsxTables = renderLayuiTable.renderTableList(xlsxData);
-  let renderData = renderLayuiTable.render(xlsxData);
-  let renderData2 = renderXSpeedTable.render(xlsxData);
-  console.log(event, data);
-  event.reply("start-table", renderData, xlsxTables, renderData2);
-});

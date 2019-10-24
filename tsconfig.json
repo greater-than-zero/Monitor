@@ -1,17 +1,15 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "noImplicitAny": false,
+    "noImplicitAny": true,
     "sourceMap": true,
     "outDir": "dist",
-    "target": "es6",
     "baseUrl": ".",
     "paths": {
       "*": ["node_modules/*"]
     }
   },
   "include": [
-    "src/**/*",
-    "layui.d.ts"
+    "src/**/*"
   ]
 }
