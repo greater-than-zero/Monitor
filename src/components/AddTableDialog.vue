@@ -7,6 +7,10 @@
       <el-form-item label="表格名">
         <el-input v-model="form.desc"></el-input>
       </el-form-item>
+      <el-form-item label="子表列表">
+        <AddTableInfoItem tableName="aa"></AddTableInfoItem>
+        <AddTableInfoItem tableName="aa"></AddTableInfoItem>
+      </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
       <el-button @click="onClickCanel">取 消</el-button>
@@ -16,8 +20,13 @@
 </template>
 
 <script>
+import AddTableInfoItem from "@/components/AddTableInfoItem";
+
 export default {
   name: "AddChannelDialog",
+  components: {
+    AddTableInfoItem
+  },
   data: function() {
     return {
       dialogIsShow: false,

@@ -55,7 +55,7 @@
         <el-table-column label="表格名" width="180">
           <template slot-scope="scope">
             <div slot="reference" class="name-wrapper">
-              <el-tag size="medium">/{{ scope.row.path }}</el-tag>
+              <el-tag size="medium" type="danger">{{ scope.row.path }}</el-tag>
             </div>
           </template>
         </el-table-column>

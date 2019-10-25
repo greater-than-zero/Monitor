@@ -1,30 +1,21 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\ADMIN\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add @types/v-charts
+  /usr/local/Cellar/node/7.3.0/bin/node /usr/local/bin/yarn
 
 PATH: 
-  C:\ProgramData\DockerDesktop\version-bin;C:\Program Files\Docker\Docker\Resources\bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\TortoiseSVN\bin;C:\Python27;C:\Program Files\nodejs\;C:\Program Files\Java\jdk1.8.0_191\bin;C:\Program Files\Java\jdk1.8.0_191\jre\bin;C:\Users\ADMIN\AppData\Local\Microsoft\WindowsApps;D:\Microsoft VS Code\bin;C:\Users\ADMIN\AppData\Roaming\npm
+  /Users/xukala/Documents/code/cocosLibs/android-sdk-macosx/tools:/Users/xukala/Documents/code/cocosLibs/android-sdk-macosx/platform-tools:/Users/xukala/Documents/code/cocosLibs/android-sdk-macosx:/Users/xukala/Documents/code/cocosLibs/cocos2d-js-v3.6.1/tools/cocos2d-console/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/VMware Fusion.app/Contents/Public:/usr/local/share/dotnet:~/.dotnet/tools:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Applications/Xamarin Workbooks.app/Contents/SharedSupport/path-bin
 
 Yarn version: 
   1.19.1
 
 Node version: 
-  10.15.0
+  9.9.0
 
 Platform: 
-  win32 x64
+  darwin x64
 
 Trace: 
-  Error: https://registry.npm.taobao.org/@types%2fv-charts: Not found
-      at Request.params.callback [as _callback] (C:\Users\ADMIN\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:66926:18)
-      at Request.self.callback (C:\Users\ADMIN\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:140564:22)
-      at Request.emit (events.js:182:13)
-      at Request.<anonymous> (C:\Users\ADMIN\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:141536:10)
-      at Request.emit (events.js:182:13)
-      at IncomingMessage.<anonymous> (C:\Users\ADMIN\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:141458:12)
-      at Object.onceWrapper (events.js:273:13)
-      at IncomingMessage.emit (events.js:187:15)
-      at endReadableNT (_stream_readable.js:1094:12)
-      at process._tickCallback (internal/process/next_tick.js:63:19)
+  Error: https://registry.npm.taobao.org/core-js/download/core-js-2.6.10.tgz?cache=0&sync_timestamp=1571677651603&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fcore-js%2Fdownload%2Fcore-js-2.6.10.tgz: unexpected end of file
+      at Zlib.zlibOnError [as onerror] (zlib.js:142:17)
 
 npm manifest: 
   {
@@ -38,6 +29,7 @@ npm manifest:
     },
     "dependencies": {
       "core-js": "^3.3.2",
+      "echarts": "^4.4.0",
       "element-ui": "^2.12.0",
       "v-charts": "^1.19.0",
       "vue": "^2.6.10",
@@ -3078,6 +3070,13 @@ Lockfile:
     version "1.1.3"
     resolved "https://registry.npm.taobao.org/echarts-wordcloud/download/echarts-wordcloud-1.1.3.tgz#07b140c8ba76b19c317b43c310f3d5dc99289ff2"
     integrity sha1-B7FAyLp2sZwxe0PDEPPV3Jkon/I=
+  
+  echarts@^4.4.0:
+    version "4.4.0"
+    resolved "https://registry.npm.taobao.org/echarts/download/echarts-4.4.0.tgz#d5260566cef0b98f5a00baf1b5010e92c1c23661"
+    integrity sha1-1SYFZs7wuY9aALrxtQEOksHCNmE=
+    dependencies:
+      zrender "4.1.1"
   
   ee-first@1.1.1:
     version "1.1.1"
@@ -8620,3 +8619,8 @@ Lockfile:
       is-ci "^1.0.10"
       normalize-path "^1.0.0"
       strip-indent "^2.0.0"
+  
+  zrender@4.1.1:
+    version "4.1.1"
+    resolved "https://registry.npm.taobao.org/zrender/download/zrender-4.1.1.tgz#201e58a55cf1a7e973e1dbad3c15596ef8779f54"
+    integrity sha1-IB5YpVzxp+lz4dutPBVZbvh3n1Q=
