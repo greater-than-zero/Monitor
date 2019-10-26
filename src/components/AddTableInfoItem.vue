@@ -1,15 +1,7 @@
 <template>
-  <div>
-    <el-row>
-      <el-col :span="5">
-        <el-checkbox label="tableName" border size="medium"></el-checkbox>
-      </el-col>
-      <el-col :span="19">
-        <div style="margin-left: 30px;">
-          <el-input placeholder="tableName" v-model="input"></el-input>
-        </div>
-      </el-col>
-    </el-row>
+  <div class="mainItem">
+    <el-checkbox :label="tableName" border size="medium" @change="onCheckBoxhange"></el-checkbox>
+    <el-input class="itemInput" :placeholder="tableName" v-model="input" :disabled="isDisabledInput"></el-input>
   </div>
 </template>
 
@@ -17,14 +9,32 @@
 export default {
   data() {
     return {
-      input: ""
+      input: "",
+      isDisabledInput: true
     };
   },
   props: {
     tableName: String
   },
   methods: {
-    handleIconClick: function() {}
+    onCheckBoxhange(value) {
+      if (value) {
+        this.isDisabledInput = false;
+      } else {
+        this.isDisabledInput = true;
+      }
+    }
   }
 };
 </script>
+
+<style>
+.mainItem {
+  display: flex;
+  flex-direction: row;
+}
+
+.itemInput {
+  margin-left: 5px;
+}
+</style>

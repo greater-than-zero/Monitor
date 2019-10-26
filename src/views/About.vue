@@ -60,6 +60,22 @@
           </template>
         </el-table-column>
 
+        <el-table-column label="子表情况" width="180">
+          <template slot-scope="scope">
+            <div slot="reference" class="name-wrapper">
+              <div v-for="child of scope.row.childs" :key="child">
+                <div v-if="child.isSelect">
+                  <el-tag size="medium" type="danger">已导出：{{ child.tableName }}</el-tag>
+                </div>
+                <div v-else>
+                  <el-tag size="medium" type="success">未导出：{{ child.tableName }}</el-tag>
+                </div>
+                <div style="margin-bottom:5px"></div>
+              </div>
+            </div>
+          </template>
+        </el-table-column>
+
         <el-table-column label="操作" fixed="right">
           <template slot-scope="scope">
             <el-button size="mini" type="primary" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
@@ -76,10 +92,11 @@
           style="float: right;"
           type="primary"
           @click="handleEdit(scope.$index, scope.row)"
-        >新增渠道</el-button>
+        >新建数据监视</el-button>
       </div>
       <ve-line :data="chartData"></ve-line>
       <ve-histogram :data="chartData"></ve-histogram>
+      <ve-ring :data="chartData"></ve-ring>
     </el-card>
     <AddChannelDialog ref="AddChannelDialog" v-on:click="onAddChannel"></AddChannelDialog>
     <AddTableDialog ref="AddTableDialog" v-on:click="onAddTable"></AddTableDialog>
@@ -137,7 +154,8 @@ export default {
     onAddTable(form) {
       this.tableData.push({
         name: form.name,
-        path: form.desc
+        path: form.desc,
+        childs: form.childs
       });
     }
   }

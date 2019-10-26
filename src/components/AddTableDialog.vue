@@ -8,8 +8,10 @@
         <el-input v-model="form.desc"></el-input>
       </el-form-item>
       <el-form-item label="子表列表">
-        <AddTableInfoItem tableName="aa"></AddTableInfoItem>
-        <AddTableInfoItem tableName="aa"></AddTableInfoItem>
+        <div v-for="table of tables" :key="table">
+          <AddTableInfoItem ref="AddTableInfoItem" :tableName="table"></AddTableInfoItem>
+          <div style="margin-bottom:5px"></div>
+        </div>
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
@@ -32,8 +34,10 @@ export default {
       dialogIsShow: false,
       form: {
         name: "",
-        desc: ""
-      }
+        desc: "",
+        childs: []
+      },
+      tables: ["sdad", "sdad1", "sdad2", "sdad2"]
     };
   },
 
@@ -42,6 +46,15 @@ export default {
       this.dialogIsShow = false;
     },
     onClickOK: function() {
+      let childList = [];
+      for (let item of this.$refs.AddTableInfoItem) {
+        childList.push({
+          tableName: item.tableName,
+          isSelect: item.isDisabledInput
+        });
+      }
+
+      this.form.childs = childList;
       this.dialogIsShow = false;
       this.$emit("click", this.form);
     },
