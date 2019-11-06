@@ -1,10 +1,11 @@
+import { ipcRenderer, IpcRendererEvent } from 'electron';
 import React from 'react';
 import './App.css';
 import logo from './logo.svg';
-import { ipcRenderer, IpcRendererEvent } from 'electron';
+import { Button } from '@material-ui/core';
 
 const App: React.FC = () => {
-  ipcRenderer.on('world', (event: IpcRendererEvent, arg1:string)=>{
+  ipcRenderer.on('world', (event: IpcRendererEvent, arg1: string) => {
     alert(arg1);
   })
   return (
@@ -14,7 +15,9 @@ const App: React.FC = () => {
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
-        <button onClick={()=>{ipcRenderer.send('hello', '456')}}>Hello</button>
+        <Button variant="outlined" color="primary" onClick={() => { ipcRenderer.send('hello', '456') }}>
+          Hello
+        </Button>
         <a
           className='App-link'
           href='https://reactjs.org'
