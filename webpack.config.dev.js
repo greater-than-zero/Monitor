@@ -5,7 +5,6 @@ const InterpolateHtmlPlugin = require("react-dev-utils/InterpolateHtmlPlugin")
 module.exports = {
     entry: {
         renderer: path.resolve(__dirname, './src/app/index.tsx'),
-        main: path.resolve(__dirname, './src/main/main.ts')
     },
     output:{
         filename: '[name].js',
@@ -56,7 +55,5 @@ module.exports = {
         port: 9000,
         hot: true
     },
-    externals:{
-        fs: 'require("fs")',
-    }
+    target: 'electron-renderer'
 }
