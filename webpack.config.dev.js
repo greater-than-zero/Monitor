@@ -3,9 +3,12 @@ const HtmlWebPackPlugin = require('html-webpack-plugin');
 const InterpolateHtmlPlugin = require("react-dev-utils/InterpolateHtmlPlugin")
 
 module.exports = {
-    entry: path.resolve(__dirname, './src/index.tsx'),
+    entry: {
+        renderer: path.resolve(__dirname, './src/app/index.tsx'),
+        main: path.resolve(__dirname, './src/main/main.ts')
+    },
     output:{
-        filename: 'bunder.js',
+        filename: '[name].js',
         path: path.resolve(__dirname, './dist')
     },
     mode: 'development',
@@ -44,12 +47,16 @@ module.exports = {
             PUBLIC_URL: "./public"
         }),
         new HtmlWebPackPlugin({
-            template: "./public/index.html"
+            template: "./public/index.html",
+            chunks: ['renderer']
         })
     ],
     devServer:{
         compress: true,
         port: 9000,
         hot: true
+    },
+    externals:{
+        fs: 'require("fs")',
     }
 }
