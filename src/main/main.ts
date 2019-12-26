@@ -1,6 +1,8 @@
-import { app, BrowserWindow, ipcMain, IpcMainEvent } from 'electron';
+import { app, BrowserWindow, ipcMain, IpcMainEvent, dialog } from 'electron';
 import path from 'path';
 import url from 'url';
+import { IpcAll } from '../ipc/ipc_all';
+import { ConfigMgr } from '../config/config_mgr';
 
 const isDev = process.env.NODE_ENV === 'development';
 const port = parseInt(process.env.PORT!, 10) || 9000;
@@ -12,8 +14,8 @@ const prodUrl = url.format({
     slashes: true,
 });
 
-
 let mainWindow: BrowserWindow | null;
+let ipcAll = new IpcAll;
 
 function createWindow() {
     mainWindow = new BrowserWindow({
@@ -24,7 +26,6 @@ function createWindow() {
         },
         width: 800,
     });
-
     // if (isDev) {
     mainWindow.loadURL(devUrl);
     // } else {
@@ -50,7 +51,5 @@ app.on('activate', () => {
     }
 });
 
-ipcMain.on('hello', (event: IpcMainEvent, arg1) => {
-    console.debug('main', arg1);
-    event.reply('world', '123');
-});
+ipcAll.init();
+ConfigMgr.Ins.init();

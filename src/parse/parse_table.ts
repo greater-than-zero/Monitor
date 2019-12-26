@@ -18,6 +18,22 @@ export const enum ParseTableValueType {
     Error = 10
 }
 
+export const enum ParseTableStringType {
+    int = "i",
+    string = "s",
+    float = "f",
+    boolean = "b",
+    Dir = "d",
+    
+    arrayInt = "ai",
+    arrayString = "as",
+    arrayfloat = "af",
+
+    array2Int = "aii",
+    array2String = "ass",
+    array2float = "aff",
+}
+
 export class ParseTableItem {
     private value?: string;
     private formula: string;
@@ -139,7 +155,8 @@ export class ParseTableInfo {
     }
 
     public getTrueCount(): number {
-        return Object.keys(this.rows).length - 3;
+        let all = Object.keys(this.rows).length;
+        return all - (all - 5);
     }
 
     public getCount(): number {

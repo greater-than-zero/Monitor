@@ -7,26 +7,26 @@ export class ParseXlsx extends ParseBase {
     public static ExplanatoryNote: string = "#";
     private xlsx: Workbook;
 
-    public parseToFile(path: string): ParseInfo {
+    public parseToFile(path: string, callback: (data: ParseInfo) => void) {
         let parseInfo = new ParseInfo();
         this.xlsx = new Workbook();
         this.xlsx.xlsx.readFile(path).then(() => {
             for (let table of this.xlsx.worksheets) {
                 parseInfo.addTable(this.parseTable(table.name));
             }
+            callback(parseInfo);
         });
-        return parseInfo;
     }
 
-    public parseToData(data: any) {
+    public parseToData(data: Buffer, callback: (data: ParseInfo) => void) {
         let parseInfo = new ParseInfo();
         this.xlsx = new Workbook();
-        this.xlsx.xlsx.read(data).then(() => {
+        this.xlsx.xlsx.load(data).then(() => {
             for (let table of this.xlsx.worksheets) {
                 parseInfo.addTable(this.parseTable(table.name));
             }
+            callback(parseInfo);
         });
-        return parseInfo;
     }
 
     public parseTable(tableName: string): ParseTableInfo {
@@ -46,7 +46,7 @@ export class ParseXlsx extends ParseBase {
                 });
             });
         }
-        
+
         return parseTable;
     }
 
