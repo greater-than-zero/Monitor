@@ -2,6 +2,7 @@ import { ParseInfo } from "../parse/parse_info";
 
 export class WriterBase {
     protected xlsx: ParseInfo;
+    private _isSeparate: boolean; //是否分离数据代码
 
     public write(xlsx: ParseInfo) {
         this.xlsx = xlsx;
@@ -118,5 +119,9 @@ export class WriterBase {
         }
 
         return r;
+    }
+
+    public isSeparate(): boolean {
+        return this._isSeparate;
     }
 }
