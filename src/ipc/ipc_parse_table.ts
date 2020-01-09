@@ -4,9 +4,11 @@ import fs from "fs";
 import { WriterJson } from "../writer/writer_json";
 import { ParseXlsx } from "../parse/parse_xlsx";
 import { ParseInfo } from "../parse/parse_info";
+import { WriterTemplateTs } from "../writer/writer_template_ts";
+import { TemplateMgr } from "../template/template_mgr";
 
 export class IpcParseTable extends IpcObject {
-    public name: string = "hello";
+    public name: string = "IpcParseTable";
 
     public do(event: IpcMainEvent, ...args: any[]) {
         // dialog.showOpenDialog({
@@ -36,7 +38,9 @@ export class IpcParseTable extends IpcObject {
                 let xlsx: ParseXlsx = new ParseXlsx();
                 xlsx.parseToData(buffer, (data: ParseInfo) => {
                     let w = new WriterJson();
-                    w.write(data);
+                    w.write(data, "");
+                    let wts = new WriterTemplateTs();
+                    wts.write(data, TemplateMgr.Ins.getTempData("ts"));
                 });
             }
         });

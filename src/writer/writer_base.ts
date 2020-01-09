@@ -4,17 +4,12 @@ export class WriterBase {
     protected xlsx: ParseInfo;
     private _isSeparate: boolean; //是否分离数据代码
 
-    public write(xlsx: ParseInfo) {
+    public write(xlsx: ParseInfo, tempData: string) {
         this.xlsx = xlsx;
-        this.generateJson();
-        this.writeFiles();
+        this.writeFiles(tempData);
     }
 
-    protected generateJson(): boolean {
-        return false;
-    }
-
-    protected writeFiles(): boolean {
+    protected writeFiles(tempData: string): boolean {
         return false;
     }
 

@@ -1,5 +1,7 @@
 import { WriterBase } from "./writer_base";
 import { ParseTableInfo, ParseTableItem, ParseTableStringType } from "../parse/parse_table";
+import { TemplateSign } from "../template/template_mgr";
+import fs from "fs";
 
 export enum WriterTemplateTypeItem_TS {
     Int32 = "number",
@@ -13,12 +15,80 @@ export enum WriterTemplateTypeItem_TS {
 }
 
 export class WriterTemplateTs extends WriterBase {
-    protected generateJson(): boolean {
-        return false;
-    }
+    protected writeFiles(tempData: string): boolean {
+        let r: boolean = false;
+        if (!this.xlsx) {
+            return r;
+        }
 
-    protected writeFiles(): boolean {
-        return false;
+        let g: { [index: string]: any } = {};
+        let tableMap = this.xlsx.getTables();
+        for (let key in tableMap) {
+            let table = tableMap[key];
+            if (!table) {
+                continue;
+            }
+
+            let itemList: { [index: string]: any } = {};
+            for (let index = table.getTrueCount(); index < table.getCount(); index++) {
+                let tableRows = table.getDatas(index);
+                if (!tableRows) {
+                    continue;
+                }
+
+                let idItem = tableRows[0];
+                if (!idItem) {
+                    continue;
+                }
+
+                itemList[idItem.Value + ""] = this.generateCode(table, tableRows);
+            }
+
+            g[table.Name] = itemList;
+        }
+
+        if (Object.keys(g).length > 0) {
+            for (let key in g) {
+                let templateTemp = tempData.concat();
+                templateTemp = templateTemp.replace(TemplateSign.className, key);
+
+                // 生成实际数据 并且处理是否分离
+                for (let kk in g[key]) {
+                    for (let kkk in g[key][kk]) {
+                    }
+                }
+
+                if (this.isSeparate()) {
+
+                } else {
+
+                }
+                
+                // 建立数据结构
+                let attributeString = "";
+                for (let kk in g[key]) {
+                    for (let kkk in g[key][kk]) {
+                        attributeString += "    ";
+                        attributeString += kkk;
+                        attributeString += ";\n";
+                    }
+                    break;
+                }
+                templateTemp = templateTemp.replace(TemplateSign.attributeList, attributeString);
+
+                let functionString = "";
+                templateTemp = templateTemp.replace(TemplateSign.function, functionString);
+
+                fs.writeFileSync("D:\\code\\Monitor\\tt\\" + key + ".ts", templateTemp, {
+                    encoding: "utf-8",
+                    flag: "w"
+                });
+            }
+            r = true;
+        }
+
+        console.debug(g);
+        return r;
     }
 
     private generateCode(table: ParseTableInfo, tableRows: ParseTableItem[]): any {
@@ -28,8 +98,6 @@ export class WriterTemplateTs extends WriterBase {
         if (!types || !tableRows || !names) {
             return;
         }
-
-        let className = table.Name;
 
         let r: { [index: string]: any } = {};
         for (let index = 0; index < tableRows.length; index++) {
@@ -43,59 +111,48 @@ export class WriterTemplateTs extends WriterBase {
             let value: any = null;
             switch (type.Value) {
                 case ParseTableStringType.int:
-                    value = this.isSeparate() ? ";" : this.convertNumber(row.Value);
-                    r[name.Value + ": " + WriterTemplateTypeItem_TS.Int32] = value;
+                    r[name.Value + ": " + WriterTemplateTypeItem_TS.Int32] = this.convertNumber(row.Value);
                     break;
                 case ParseTableStringType.string:
-                    value = this.isSeparate() ? ";" : this.convertString(row.Value);
-                    r[name.Value + ": " + WriterTemplateTypeItem_TS.String] = value;
+                    r[name.Value + ": " + WriterTemplateTypeItem_TS.String] = this.convertString(row.Value);
                     break;
                 case ParseTableStringType.float:
-                    value = this.isSeparate() ? ";" : this.convertfloat(row.Value);
-                    r[name.Value + ": " + WriterTemplateTypeItem_TS.Float] = value;
+                    r[name.Value + ": " + WriterTemplateTypeItem_TS.Float] = this.convertfloat(row.Value);
                     break;
                 case ParseTableStringType.boolean:
-                    value = this.isSeparate() ? ";" : this.convertBool(row.Value);
-                    r[name.Value + ": " + WriterTemplateTypeItem_TS.Boolean] = value;
+                    r[name.Value + ": " + WriterTemplateTypeItem_TS.Boolean] = this.convertBool(row.Value);
                     break;
                 case ParseTableStringType.arrayInt:
-                    value = this.isSeparate() ? ";" : this.convertArrayNumber(row.Value);
                     r[name.Value + ": "
                         + WriterTemplateTypeItem_TS.Int32
-                        + WriterTemplateTypeItem_TS.Array] = value;
+                        + WriterTemplateTypeItem_TS.Array] = this.convertArrayNumber(row.Value);
                     break;
                 case ParseTableStringType.arrayfloat:
-                    value = this.isSeparate() ? ";" : this.convertArrayFloat(row.Value);
                     r[name.Value + ": "
                         + WriterTemplateTypeItem_TS.Float
-                        + WriterTemplateTypeItem_TS.Array] = value;
+                        + WriterTemplateTypeItem_TS.Array] = this.convertArrayFloat(row.Value);
                     break;
                 case ParseTableStringType.arrayString:
-                    value = this.isSeparate() ? ";" : this.convertArrayString(row.Value);
                     r[name.Value + ": "
                         + WriterTemplateTypeItem_TS.String
-                        + WriterTemplateTypeItem_TS.Array] = value;
+                        + WriterTemplateTypeItem_TS.Array] = this.convertArrayString(row.Value);
                     break;
                 case ParseTableStringType.array2Int:
-                    value = this.isSeparate() ? ";" : this.convertArray2Number(row.Value);
                     r[name.Value + ": "
                         + WriterTemplateTypeItem_TS.Int32
-                        + WriterTemplateTypeItem_TS.Array2] = value;
+                        + WriterTemplateTypeItem_TS.Array2] = this.convertArray2Number(row.Value);
                     break;
                 case ParseTableStringType.array2float:
-                    value = this.isSeparate() ? ";" : this.convertArray2Float(row.Value);
                     r[name.Value + ": "
                         + WriterTemplateTypeItem_TS.Float
-                        + WriterTemplateTypeItem_TS.Array2] = value;
+                        + WriterTemplateTypeItem_TS.Array2] = this.convertArray2Float(row.Value);
                     break;
                 case ParseTableStringType.array2String:
-                    value = this.isSeparate() ? ";" : this.convertArray2String(row.Value);
                     r[name.Value + ": "
                         + WriterTemplateTypeItem_TS.String
-                        + WriterTemplateTypeItem_TS.Array2] = value;
+                        + WriterTemplateTypeItem_TS.Array2] = this.convertArray2String(row.Value);
                     break;
                 case ParseTableStringType.Dir:
-                    value = this.isSeparate() ? ";" : this.convertDir(row.Value);
                     r[name.Value + ":" + "{[index: string]: string}"] = this.convertDir(row.Value);
                     break;
             }

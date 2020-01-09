@@ -15,8 +15,11 @@ const App: React.FC = () => {
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
-        <Button variant="outlined" color="primary" onClick={() => { ipcRenderer.send('hello', '456') }}>
-          Hello
+        <Button variant="outlined" color="primary" onClick={() => { ipcRenderer.send('IpcParseTable', '456') }}>
+        IpcParseTable
+        </Button>
+        <Button variant="outlined" color="primary" onClick={() => { ipcRenderer.send('IpcParseTemplate', '456') }}>
+        IpcParseTemplate
         </Button>
         <a
           className='App-link'

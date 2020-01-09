@@ -4,7 +4,7 @@ import { ParseTableItem, ParseTableInfo, ParseTableStringType } from "../parse/p
 
 export class WriterJson extends WriterBase {
 
-    protected generateJson(): boolean {
+    protected generateJson(tempData: string): boolean {
         let r: boolean = false;
         if (!this.xlsx) {
             return r;

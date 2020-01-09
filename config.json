@@ -3,5 +3,10 @@
     "excelBranch": [
         "wxgame"
     ],
-    "generateMouldPath": ""
+    "generateMouldPath": "",
+    "templateList": {
+        "ts": {
+            "path": "D:\\code\\Monitor\\t\\ts-template.ts"
+        }
+    }
 }
